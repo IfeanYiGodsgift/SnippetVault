@@ -4,6 +4,7 @@ package db
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -11,13 +12,19 @@ import (
 )
 
 // This is the connection string for your LOCAL MongoDB server.
-const MONGO_URI = "mongodb://localhost:27017"
+// const MONGO_URI = "mongodb://localhost:27017"
+
 const DB_NAME = "snippet_vault"
 
 var client *mongo.Client // We'll store our database connection here
 
 // Connect initializes the connection to MongoDB
 func Connect() *mongo.Client {
+	MONGO_URI := os.Getenv("MONGO_URI")
+	if MONGO_URI == "" {
+		log.Fatal("MONGO_URI environment variable not set")
+	}
+
 	// 1. Setup database connection
 	c, err := mongo.NewClient(options.Client().ApplyURI(MONGO_URI))
 	if err != nil {
