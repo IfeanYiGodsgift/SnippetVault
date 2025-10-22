@@ -1,10 +1,10 @@
 // src/api.js
 
-const API_URI = "https://snippet-vault-server.onrender.com";
+const API_URL = "https://snippet-vault-server.onrender.com";
 
 // 1. Fetch all snippets
 export async function fetchAllSnippets() {
-  const response = await fetch(`${API_URI}/snippets`);
+  const response = await fetch(`${API_URL}/snippets`);
   if (!response.ok) {
     throw new Error("Failed to fetch snippets");
   }
@@ -13,7 +13,7 @@ export async function fetchAllSnippets() {
 
 // 2. Create a new snippet
 export async function createSnippet(snippetData) {
-  const response = await fetch(`${API_URI}/snippets`, {
+  const response = await fetch(`${API_URL}/snippets`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export async function createSnippet(snippetData) {
 
 // 3. Search snippets
 export async function searchSnippets(query) {
-  const response = await fetch(`${API_URI}/search?q=${query}`);
+  const response = await fetch(`${API_URL}/search?q=${query}`);
   if (!response.ok) {
     throw new Error("Failed to search snippets");
   }
@@ -42,7 +42,7 @@ export async function searchSnippets(query) {
 
 // 4. Filter by language
 export async function filterByLanguage(lang) {
-  const response = await fetch(`${API_URI}/snippets/lang/${lang}`);
+  const response = await fetch(`${API_URL}/snippets/lang/${lang}`);
   if (!response.ok) {
     throw new Error("Failed to filter snippets");
   }
@@ -51,7 +51,7 @@ export async function filterByLanguage(lang) {
 
 // 5. Delete a snippet
 export async function deleteSnippet(id) {
-  const response = await fetch(`${API_URI}/snippets/${id}`, {
+  const response = await fetch(`${API_URL}/snippets/${id}`, {
     method: "DELETE",
   });
 
