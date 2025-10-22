@@ -20,7 +20,7 @@ var client *mongo.Client // We'll store our database connection here
 
 // Connect initializes the connection to MongoDB
 func Connect() *mongo.Client {
-	MONGO_URI := os.Getenv("MONGO_URI")
+	MONGO_URI := os.Getenv("MONGODB_URI")
 	if MONGO_URI == "" {
 		log.Fatal("MONGO_URI environment variable not set")
 	}
