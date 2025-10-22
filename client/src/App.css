@@ -1,0 +1,271 @@
+:root {
+  --bg: #1a202c;
+  --sidebar: #1d2633;
+  --header: #1d2633;
+  --text: #cfd7e0;
+  --border: #2d3748;
+  --accent: #4299e1;
+  --hover: #2b3952;
+  --card-color: #2a3447;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+/* === BASE LAYOUT === */
+.app {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+.header {
+  background: var(--header);
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.search {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card-color);
+  color: var(--text);
+  width: 400px;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.body {
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* === SIDEBAR (Desktop Base) === */
+.sidebar {
+  background: var(--sidebar);
+  width: 250px;
+  min-width: 250px;
+  padding: 1.5rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
+  position: relative; /* Anchor for toggle */
+  /* NO overflow */
+}
+
+.sidebar-content {
+  flex-grow: 1; /* ✅ Correct: Pushes toggle down */
+  opacity: 1;
+  transition: opacity 0.2s 0.1s ease;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.new-snippet-btn {
+  background: var(--accent);
+  color: rgb(33, 44, 56);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+}
+
+.sidebar h2 {
+  margin-top: 1rem;
+  white-space: nowrap;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar li {
+  margin: 0.5rem 0;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.sidebar li:hover {
+  background-color: var(--hover);
+}
+
+/* === SIDEBAR TOGGLE (Desktop "Cut-Out") === */
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  position: absolute; /* Relative to .sidebar */
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%); /* Center on border */
+  z-index: 10;
+}
+.sidebar-toggle:hover {
+  color: var(--accent);
+}
+
+/* Icons via CSS */
+.sidebar.open .sidebar-toggle::before { content: '◀'; }
+.sidebar.collapsed .sidebar-toggle::before { content: '▶'; }
+
+/* === MAIN CONTENT === */
+.main {
+  flex-grow: 1;
+  padding: 2rem;
+  padding-bottom: 4rem;
+  overflow-y: auto; /* ✅ ONLY main scrolls */
+}
+.main h2 {
+  margin-bottom: 1.5rem;
+}
+
+/* === COLLAPSED SIDEBAR (Desktop) === */
+.sidebar.collapsed {
+  width: 80px;
+  min-width: 80px;
+  padding: 1.5rem 1rem;
+  align-items: center;
+}
+
+.sidebar.collapsed .sidebar-content {
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+
+.sidebar.collapsed .new-snippet-btn {
+  font-size: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  width: auto;
+}
+
+/* === RESPONSIVE (MOBILE) === */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  .search {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .body {
+    flex-direction: column;
+    overflow-y: auto; /* Body scrolls */
+  }
+
+  /* --- Mobile Sidebar --- */
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    position: static;
+    padding: 1rem;
+    /* Animate padding for collapse */
+    transition: padding 0.3s ease;
+    /* Remove height transition, let content dictate */
+  }
+
+  /* --- Mobile Toggle Button (Normal Flow) --- */
+  .sidebar-toggle {
+     position: static; /* Let it flow in the document */
+     transform: none;
+     width: 100%;
+     margin-top: 1rem; /* Space above */
+     padding: 0.5rem;
+     border-radius: 6px;
+     background: var(--hover);
+     border: 1px solid var(--border);
+     height: auto;
+     display: block;
+     text-align: center;
+     order: 10; /* Force below content when open */
+  }
+
+  /* Mobile Icons */
+  .sidebar.open .sidebar-toggle::before { content: '▲ Collapse'; }
+  .sidebar.collapsed .sidebar-toggle::before { content: '▼ Expand'; }
+
+
+  /* --- Mobile Sidebar Collapsed State --- */
+  .sidebar.collapsed {
+    width: 100%;
+    min-width: 100%;
+    height: auto; /* Let content define height */
+    padding: 0.5rem 1rem; /* Reduced padding */
+    align-items: stretch; /* Keep buttons full width */
+    /* Remove overflow: hidden to prevent clipping */
+    overflow: visible;
+    /* Ensure flex is still active */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hide content */
+  .sidebar.collapsed .sidebar-content {
+      display: none;
+  }
+
+   /* Style the "+" button */
+   .sidebar.collapsed .new-snippet-btn {
+     display: block; /* Make sure it's visible */
+     font-size: 1.5rem;
+     padding: 0.5rem 0.75rem;
+     width: 100%;
+     margin-bottom: 0.5rem; /* Space between buttons */
+     order: 1; /* + button first */
+   }
+
+   /* Style the toggle button */
+   .sidebar.collapsed .sidebar-toggle {
+       margin-top: 0;
+       order: 2; /* Toggle button second */
+   }
+
+  /* --- Mobile Main Content --- */
+  .main {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+    overflow-y: visible; /* Prevent double scroll */
+  }
+}
