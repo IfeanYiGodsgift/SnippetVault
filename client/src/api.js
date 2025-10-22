@@ -1,6 +1,6 @@
 // src/api.js
 
-const API_URL = "http://localhost:8080";
+const API_URL = "https://snippet-vault-server.onrender.com";
 
 // 1. Fetch all snippets
 export async function fetchAllSnippets() {
