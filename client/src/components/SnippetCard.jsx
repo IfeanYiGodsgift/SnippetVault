@@ -1,11 +1,24 @@
 // src/components/SnippetCard.jsx
-import React from 'react';
 import './SnippetCard.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import React, { useState } from 'react';
 
 // 1. Accept the 'onFilterByLanguage' prop
 function SnippetCard({ snippet, onDelete, onFilterByLanguage }) {
+
+  const [isCopied, setIsCopied] = useState(false);
+
+  // Function to handle the copy
+  const handleCopy = () => {
+    navigator.clipboard.writeText(snippet.code);
+    setIsCopied(true);
+    // Reset the "Copied!" message after 2 seconds
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  };
+
   return (
     <div className="snippet-card">
       <div className="card-header">
@@ -18,7 +31,9 @@ function SnippetCard({ snippet, onDelete, onFilterByLanguage }) {
           {snippet.language}
         </span>
       </div>
-      
+    
+    <div className="code-block-wrapper">
+
       <SyntaxHighlighter 
         language={snippet.language} 
         style={atomDark}
@@ -32,6 +47,12 @@ function SnippetCard({ snippet, onDelete, onFilterByLanguage }) {
       >
         {snippet.code}
       </SyntaxHighlighter>
+      <button className="copy-btn" onClick={handleCopy}>
+        {isCopied ? 'Copied' : 'Copy'}
+      </button>
+
+    </div>
+      
 
       <div className="card-footer">
         <div className="card-tags">

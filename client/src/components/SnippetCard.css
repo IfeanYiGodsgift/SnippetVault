@@ -77,3 +77,46 @@
 .delete-btn:hover {
   color: #e06c75; /* A reddish color for delete */
 }
+
+/* --- Styles for Copy Button --- */
+
+/* Wrapper holds the code and the copy button */
+.code-block-wrapper {
+  position: relative; /* Needed for absolute positioning of button */
+}
+
+/* Style for the new copy button */
+.copy-btn {
+  position: absolute; /* Position over the code block */
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--hover); /* Use CSS variables */
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.2s ease-in-out;
+  font-size: 0.8rem;
+}
+
+/* Show button when hovering over the code block wrapper */
+.code-block-wrapper:hover .copy-btn {
+  opacity: 1;
+}
+
+/* Slight visual feedback on hover/focus */
+.copy-btn:hover {
+  background-color: var(--card-color);
+}
+.copy-btn:active {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* Style for the "Copied!" state */
+.copy-btn:disabled { /* Use disabled state for 'Copied!' feedback if needed */
+  opacity: 1;
+  cursor: default;
+}
